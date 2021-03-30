@@ -1,0 +1,20 @@
+pipeline{
+    agent any
+    
+    environment{
+        PATH = "C:/opt/apache-maven-3.6.3:$PATH"
+    }   
+    stages{
+        stage("Git Checkout"){
+            steps{
+                git credentialsId: '021523a8-c995-4f96-a49e-73190f5c2c1e', url: 'https://github.com/gobi-git/simple-java-maven-app.git'
+            }
+        }
+        stage("Maven Build"){
+            steps{
+                sh "mvn clean package"
+                sh "mv target/*.war target/springapp-v1.war"
+            }
+        }
+     }
+}
